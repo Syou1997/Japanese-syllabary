@@ -1,0 +1,182 @@
+@font-face {
+    font-family: "myFont1";
+    src: url("./../清松手寫體1.ttf");
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+body {
+    position: relative;
+
+    //背景圖片
+    .fixed-image {
+        min-height: 100vh;
+        position: fixed;
+        width: 100%;
+        object-fit: cover;
+        z-index: -5;
+        opacity: 0.8;
+    }
+
+    // 遮罩
+    div.filter {
+        min-height: 100vh;
+        background-color: rgba(138, 136, 136, 0.3);
+        width: 100%;
+        z-index: -1;
+
+        //header
+        header {
+            h1 {
+                text-align: center;
+                padding: 2rem;
+                font-size: 4rem;
+                font-weight: bold;
+                font-family: monospace;
+            }
+        }
+
+        h4 {
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            font-family: "myFont1", sans-serif;
+        }
+
+        //main
+        main {
+
+            //勾選區域
+            .box-area {
+                margin-top: 1rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .group {
+                    display: flex;
+                    justify-content: space-around;
+                    width: 80%; // 調整寬度，讓兩組元素能夠並排顯示
+                    margin-bottom: 1.5rem;
+
+                    label {
+                        font-size: 1.5rem;
+                        padding-left: 1rem;
+                        margin-bottom: 0.5rem;
+                        font-weight: bold;
+                        font-family: monospace;
+
+                    }
+
+                    input {
+                        margin-left: 0.5rem;
+                        margin-bottom: 2rem;
+                    }
+                }
+            }
+
+            //按鈕區域
+            .btn-area {
+                position: relative;
+                margin-top: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+
+                .btn {
+                    min-width: 6rem;
+                    min-height: 6rem;
+                    border-radius: 50%;
+                    border: none;
+                    cursor: pointer;
+                    text-align: center;
+                    font-weight: bolder;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        transform: scale(0.9);
+
+                        .p1 {
+                            display: none;
+                        }
+
+                        .p2 {
+                            display: block;
+                        }
+
+                    }
+
+                    &:active {
+                        transform: scale(1);
+                    }
+
+                    .p1 {
+                        font-size: 2rem;
+                    }
+
+                    .p2 {
+                        color: red;
+                        font-size: 2rem;
+                        display: none;
+                    }
+
+                }
+
+
+            }
+
+            //姓名區域
+            .name-area {
+                margin-top: 4rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+
+                h2 {
+                    font-size: 5rem;
+                }
+            }
+        }
+
+    }
+
+
+
+}
+
+// Media Queries for responsiveness
+@media (max-width: 768px) {
+    .box-area {
+        .group {
+            width: 95%;  // 當螢幕寬度小於 768px 時，進一步縮小每組的寬度
+            flex-direction: column;  // 變為垂直排列
+            align-items: flex-start;  // 左對齊
+        }
+
+        .group label {
+            font-size: 1.1rem;  // 調整字體大小以適應小螢幕
+            margin-bottom: 0.5rem;  // 增加 label 和 checkbox 之間的間距
+        }
+
+        .group input {
+            margin-left: 0;  // 移除 margin-left 讓每組元件更緊湊
+            margin-bottom: 1rem;  // 增加 checkbox 和下方元素的間距
+        }
+    }
+}
