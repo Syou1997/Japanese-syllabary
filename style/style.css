@@ -104,6 +104,7 @@ body .filter main .btn-area .btn {
   border: none;
   cursor: pointer;
   font-size: 2.1rem;
+  font-weight: 600;
 }
 body .filter main .btn-area .btn:hover {
   transform: scale(0.9);
