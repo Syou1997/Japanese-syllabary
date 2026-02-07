@@ -184,11 +184,9 @@ const fullList = [
     { "name": "リャ", "team": ["youonK"] },
     { "name": "リュ", "team": ["youonK"] },
     { "name": "リョ", "team": ["youonK"] }
-
 ];
 
-//取得元素
-//input的元素
+// checkbox
 const seionHEl = document.getElementById("seionH");
 const seionKEl = document.getElementById("seionK");
 const bionHEl = document.getElementById("bionH");
@@ -200,137 +198,61 @@ const handakuonKEl = document.getElementById("handakuonK");
 const youonHEl = document.getElementById("youonH");
 const youonKEl = document.getElementById("youonK");
 
-
-//按鈕元素
+// button
 const btnEl = document.querySelector("button");
-//名字元素
-const nameEl = document.getElementById("name");
 
+// popup
+const popupEl = document.getElementById("popup");
+const popupTextEl = document.getElementById("popupText");
 
-
-
-//抽選按鈕
+// 抽選
 btnEl.addEventListener("click", function () {
 
-    //如果全部沒勾
-    if (seionHEl.checked === false &&
-        seionKEl.checked === false &&
-        bionHEl.checked === false &&
-        bionKEl.checked === false &&
-        dakuonHEl.checked === false &&
-        dakuonKEl.checked === false &&
-        handakuonHEl.checked === false &&
-        handakuonKEl.checked === false &&
-        youonHEl.checked === false &&
-        youonKEl.checked === false) {
-        // console.log("進入沒勾的方法");
-        let randomNum = Math.floor(Math.random() * 200)
-        while (randomNum >= fullList.length) {
-            randomNum = Math.floor(Math.random() * 200)
-        }
-        const result = fullList[randomNum].name;
-        nameEl.innerText = result;
+    let result = "";
+
+    if (
+        !seionHEl.checked &&
+        !seionKEl.checked &&
+        !bionHEl.checked &&
+        !bionKEl.checked &&
+        !dakuonHEl.checked &&
+        !dakuonKEl.checked &&
+        !handakuonHEl.checked &&
+        !handakuonKEl.checked &&
+        !youonHEl.checked &&
+        !youonKEl.checked
+    ) {
+        let randomNum = Math.floor(Math.random() * fullList.length);
+        result = fullList[randomNum].name;
     } else {
-        //建立空清單
         let checkListed = [];
-        // console.log("有勾");
-        //清音(平假名)
-        if (seionHEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("seionH") !== -1) {
-                    checkListed.push(item.name);
-                    console.log(checkListed);
 
+        fullList.forEach(item => {
+            if (
+                (seionHEl.checked && item.team.includes("seionH")) ||
+                (seionKEl.checked && item.team.includes("seionK")) ||
+                (bionHEl.checked && item.team.includes("bionH")) ||
+                (bionKEl.checked && item.team.includes("bionK")) ||
+                (dakuonHEl.checked && item.team.includes("dakuonH")) ||
+                (dakuonKEl.checked && item.team.includes("dakuonK")) ||
+                (handakuonHEl.checked && item.team.includes("handakuonH")) ||
+                (handakuonKEl.checked && item.team.includes("handakuonK")) ||
+                (youonHEl.checked && item.team.includes("youonH")) ||
+                (youonKEl.checked && item.team.includes("youonK"))
+            ) {
+                checkListed.push(item.name);
+            }
+        });
 
-                }
-            })
-        }
-        //清音(片假名)
-        if (seionKEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("seionK") !== -1) {
-                    checkListed.push(item.name);
-                    console.log(checkListed);
-
-
-                }
-            })
-        }
-        //鼻音(平假名)有勾
-        if (bionHEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("bionH") !== -1) {
-                    checkListed.push(item.name);
-                }
-            })
-        }
-        //鼻音(片假名)有勾
-        if (bionKEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("bionK") !== -1) {
-                    checkListed.push(item.name);
-                }
-            })
-        }
-        //濁音(平假名)有勾
-        if (dakuonHEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("dakuonH") !== -1) {
-                    checkListed.push(item.name);
-                }
-            })
-        }
-        //濁音(片假名)有勾
-        if (dakuonKEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("dakuonK") !== -1) {
-                    checkListed.push(item.name);
-                }
-            })
-        }
-        //半濁音(平假名)有勾
-        if (handakuonHEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("handakuonH") !== -1) {
-                    checkListed.push(item.name);
-                }
-            })
-        }
-        //半濁音(片假名)有勾
-        if (handakuonKEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("handakuonK") !== -1) {
-                    checkListed.push(item.name);
-                }
-            })
-        }
-        //拗音(平假名)有勾
-        if (youonHEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("youonH") !== -1) {
-                    checkListed.push(item.name);
-                }
-            })
-        }
-        //拗音(片假名)有勾
-        if (youonKEl.checked === true) {
-            fullList.forEach((item) => {
-                if (item.team.indexOf("youonK") !== -1) {
-                    checkListed.push(item.name);
-                }
-            })
-        }
-        //從有打勾的人裡面選一位出來
-        let randomNum = Math.floor(Math.random() * 100)
-        while (randomNum >= checkListed.length) {
-            randomNum = Math.floor(Math.random() * 100)
-        }
+        let randomNum = Math.floor(Math.random() * checkListed.length);
         result = checkListed[randomNum];
-        nameEl.innerText = result;
     }
 
+    popupTextEl.innerText = result;
+    popupEl.classList.add("show");
+});
 
-
-})
-
-
+// 點擊字本身關閉
+popupTextEl.addEventListener("click", function () {
+    popupEl.classList.remove("show");
+});

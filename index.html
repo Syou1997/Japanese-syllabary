@@ -1,83 +1,66 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Website summary">
-    <meta name="author" content="Syou Zhang">
-    <!-- Control the behavior of search engine crawling and indexing -->
-    <meta name="robots" content="index,follow"><!-- All Search Engines -->
-    <meta name="googlebot" content="index,follow"><!-- Google Specific -->
     <title>50音篩選器</title>
     <link rel="stylesheet" href="./style/style.css">
 </head>
 
 <body>
-    <!-- 背景圖片 -->
-    <img class="fixed-image" src="./image/背景.jpg" alt="fixed-image">
-    <!-- 遮罩 -->
+    <img class="fixed-image" src="./image/背景.jpg" alt="bg">
+
     <div class="filter">
         <header>
             <h1>50音篩選器</h1>
         </header>
+
         <h4>請於1秒內大聲唸出</h4>
-        <!-- main -->
+
         <main>
-            <div class="box-area">
-                <div class="group">
-                    <label for="seionH">清音(平假名)</label>
-                    <input id="seionH" type="checkbox" value="seionH">
-                    <label for="seionK">清音(片假名)</label>
-                    <input id="seionK" type="checkbox" value="seionK">
-                </div>
 
-                <div class="group">
-                    <label for="bionH">鼻音(平假名)</label>
-                    <input id="bionH" type="checkbox" value="bionH">
-                    <label for="bionK">鼻音(片假名)</label>
-                    <input id="bionK" type="checkbox" value="bionK">
-                </div>
-
-                <div class="group">
-                    <label for="dakuonH">濁音(平假名)</label>
-                    <input id="dakuonH" type="checkbox" value="dakuonH">
-                    <label for="dakuonK">濁音(片假名)</label>
-                    <input id="dakuonK" type="checkbox" value="dakuonK">
-                </div>
-
-                <div class="group">
-                    <label for="handakuonH">半濁音(平假名)</label>
-                    <input id="handakuonH" type="checkbox" value="handakuonH">
-                    <label for="handakuonK">半濁音(片假名)</label>
-                    <input id="handakuonK" type="checkbox" value="handakuonK">
-                </div>
-
-                <div class="group">
-                    <label for="youonH">拗音(平假名)</label>
-                    <input id="youonH" type="checkbox" value="youonH">
-                    <label for="youonK">拗音(片假名)</label>
-                    <input id="youonK" type="checkbox" value="youonK">
+            <!-- 彈跳視窗 -->
+            <div class="popup-area">
+                <div class="popup" id="popup">
+                    <h2 id="popupText"></h2>
                 </div>
             </div>
+
+            <!-- checkbox -->
+            <div class="box-area">
+                <div class="group">
+                    <label>清音(平假名)</label><input id="seionH" type="checkbox">
+                    <label>清音(片假名)</label><input id="seionK" type="checkbox">
+                </div>
+                <div class="group">
+                    <label>鼻音(平假名)</label><input id="bionH" type="checkbox">
+                    <label>鼻音(片假名)</label><input id="bionK" type="checkbox">
+                </div>
+                <div class="group">
+                    <label>濁音(平假名)</label><input id="dakuonH" type="checkbox">
+                    <label>濁音(片假名)</label><input id="dakuonK" type="checkbox">
+                </div>
+                <div class="group">
+                    <label>半濁音(平假名)</label><input id="handakuonH" type="checkbox">
+                    <label>半濁音(片假名)</label><input id="handakuonK" type="checkbox">
+                </div>
+                <div class="group">
+                    <label>拗音(平假名)</label><input id="youonH" type="checkbox">
+                    <label>拗音(片假名)</label><input id="youonK" type="checkbox">
+                </div>
+            </div>
+
+            <!-- 按鈕 -->
             <div class="btn-area">
                 <button class="btn">
                     <p class="p1">產生</p>
                     <p class="p2">Go!</p>
                 </button>
             </div>
-            <div class="name-area">
-                <h2 id="name"></h2>
-            </div>
 
         </main>
     </div>
 
-
-
-
-
     <script src="./main.js"></script>
 </body>
-
 </html>

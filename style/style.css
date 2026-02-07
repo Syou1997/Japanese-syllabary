@@ -9,15 +9,6 @@
   box-sizing: border-box;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: normal;
-}
-
 body {
   position: relative;
 }
@@ -30,109 +21,107 @@ body .fixed-image {
   z-index: -5;
   opacity: 0.8;
 }
-body div.filter {
+body .filter {
   min-height: 100vh;
   background-color: rgba(138, 136, 136, 0.3);
-  width: 100%;
-  z-index: -1;
 }
-body div.filter header h1 {
+body .filter header h1 {
   text-align: center;
   padding: 2rem;
   font-size: 4rem;
   font-weight: bold;
   font-family: monospace;
 }
-body div.filter h4 {
+body .filter h4 {
   text-align: center;
   color: white;
   font-size: 3rem;
   font-family: "myFont1", sans-serif;
 }
-body div.filter main .box-area {
+body .filter main {
+  /* === 彈跳視窗區 === */
+}
+body .filter main .popup-area {
+  min-height: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .filter main .popup-area .popup {
+  display: none;
+  background: white;
+  padding: 2rem 4rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: pop 0.3s ease;
+}
+body .filter main .popup-area .popup h2 {
+  font-size: 5rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+body .filter main .popup-area .popup.show {
+  display: block;
+}
+@keyframes pop {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+body .filter main .box-area {
   margin-top: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-body div.filter main .box-area .group {
+body .filter main .box-area .group {
   display: flex;
   justify-content: space-around;
   width: 80%;
   margin-bottom: 1.5rem;
 }
-body div.filter main .box-area .group label {
+body .filter main .box-area .group label {
   font-size: 1.5rem;
-  padding-left: 1rem;
-  margin-bottom: 0.5rem;
   font-weight: bold;
   font-family: monospace;
 }
-body div.filter main .box-area .group input {
-  margin-left: 0.5rem;
-  margin-bottom: 2rem;
-}
-body div.filter main .btn-area {
-  position: relative;
+body .filter main .btn-area {
   margin-top: 1rem;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
 }
-body div.filter main .btn-area .btn {
+body .filter main .btn-area .btn {
   min-width: 6rem;
   min-height: 6rem;
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  text-align: center;
-  font-weight: bolder;
-  transition: all 0.2s ease;
+  font-size: 2.1rem;
 }
-body div.filter main .btn-area .btn:hover {
+body .filter main .btn-area .btn:hover {
   transform: scale(0.9);
 }
-body div.filter main .btn-area .btn:hover .p1 {
+body .filter main .btn-area .btn:hover .p1 {
   display: none;
 }
-body div.filter main .btn-area .btn:hover .p2 {
+body .filter main .btn-area .btn:hover .p2 {
   display: block;
 }
-body div.filter main .btn-area .btn:active {
-  transform: scale(1);
-}
-body div.filter main .btn-area .btn .p1 {
-  font-size: 2rem;
-}
-body div.filter main .btn-area .btn .p2 {
-  color: red;
-  font-size: 2rem;
+body .filter main .btn-area .btn .p2 {
   display: none;
-}
-body div.filter main .name-area {
-  margin-top: 4rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-body div.filter main .name-area h2 {
-  font-size: 5rem;
+  color: red;
 }
 
+/* RWD */
 @media (max-width: 768px) {
-  .box-area .group {
-    width: 95%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .box-area .group label {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
-  .box-area .group input {
-    margin-left: 0;
-    margin-bottom: 1rem;
+  .popup-area .popup h2 {
+    font-size: 3.5rem;
   }
 }/*# sourceMappingURL=style.css.map */
