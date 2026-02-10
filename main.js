@@ -269,14 +269,18 @@ function showHistoryPopup() {
 
     historyPopupEl.innerHTML = "";
 
+    const usedChars = new Set(); // 全局去重
+
     groups.forEach(g => {
         const filtered = historyList.filter(ch => {
             const item = fullList.find(f => f.name === ch);
             return item && item.team.some(t =>
                 t.includes(g.key) && ((g.hira && isHiragana(ch)) || (!g.hira && isKatakana(ch)))
             );
-        });
+        }).filter(ch => !usedChars.has(ch)); // 避免重複
+
         if (filtered.length > 0) {
+            filtered.forEach(ch => usedChars.add(ch)); // 標記已使用
             const div = document.createElement("div");
             div.className = "group";
             div.innerHTML = `<strong>${g.title}：</strong>${filtered.join("、")}`;
@@ -291,3 +295,4 @@ function showHistoryPopup() {
 
     historyPopupEl.classList.add("show");
 }
+
