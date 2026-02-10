@@ -38,11 +38,12 @@ body {
             color: white;
             font-size: 3rem;
             font-family: "myFont1", sans-serif;
+            cursor: pointer;
         }
 
         main {
+            position: relative;
 
-            /* === 彈跳視窗區 === */
             .popup-area {
                 min-height: 8rem;
                 display: flex;
@@ -58,7 +59,7 @@ body {
                     animation: pop 0.3s ease;
 
                     h2 {
-                        font-size: 5rem;
+                        font-size: 6rem;
                         cursor: pointer;
                         user-select: none;
                     }
@@ -70,14 +71,8 @@ body {
             }
 
             @keyframes pop {
-                from {
-                    transform: scale(0.7);
-                    opacity: 0;
-                }
-                to {
-                    transform: scale(1);
-                    opacity: 1;
-                }
+                from { transform: scale(0.7); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
             }
 
             .box-area {
@@ -96,6 +91,11 @@ body {
                         font-size: 1.5rem;
                         font-weight: bold;
                         font-family: monospace;
+                    }
+
+                    input[type="checkbox"] {
+                        transform: scale(1.5);
+                        margin-left: 0.5rem;
                     }
                 }
             }
@@ -130,9 +130,39 @@ body {
     }
 }
 
+/* 歷史彈跳視窗 */
+.history-popup {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-height: 300px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    overflow-y: auto;
+    font-size: 2.5rem;
+    line-height: 2.8rem;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+
+    .group {
+        margin-bottom: 1rem;
+        word-break: break-all;
+    }
+
+    &.show { display: block; }
+}
+
 /* RWD */
 @media (max-width: 768px) {
     .popup-area .popup h2 {
         font-size: 3.5rem;
+    }
+    .history-popup {
+        font-size: 1.8rem;
+        line-height: 2rem;
     }
 }

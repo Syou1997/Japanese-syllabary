@@ -1,4 +1,3 @@
-//清單
 const fullList = [
     { "name": "あ", "team": ["seionH"] },
     { "name": "い", "team": ["seionH"] },
@@ -186,7 +185,6 @@ const fullList = [
     { "name": "リョ", "team": ["youonK"] }
 ];
 
-// checkbox
 const seionHEl = document.getElementById("seionH");
 const seionKEl = document.getElementById("seionK");
 const bionHEl = document.getElementById("bionH");
@@ -198,35 +196,30 @@ const handakuonKEl = document.getElementById("handakuonK");
 const youonHEl = document.getElementById("youonH");
 const youonKEl = document.getElementById("youonK");
 
-// button
-const btnEl = document.querySelector("button");
-
-// popup
+const btnEl = document.querySelector(".btn");
 const popupEl = document.getElementById("popup");
 const popupTextEl = document.getElementById("popupText");
+const instructionEl = document.getElementById("instruction");
 
-// 抽選
-btnEl.addEventListener("click", function () {
+const historyPopupEl = document.getElementById("history-popup");
+let historyList = [];
 
-    let result = "";
+const isHiragana = ch => /[\u3040-\u309F]/.test(ch);
+const isKatakana = ch => /[\u30A0-\u30FF]/.test(ch);
+
+// 產生假名
+btnEl.addEventListener("click", () => {
+    let pool = [];
 
     if (
-        !seionHEl.checked &&
-        !seionKEl.checked &&
-        !bionHEl.checked &&
-        !bionKEl.checked &&
-        !dakuonHEl.checked &&
-        !dakuonKEl.checked &&
-        !handakuonHEl.checked &&
-        !handakuonKEl.checked &&
-        !youonHEl.checked &&
-        !youonKEl.checked
+        !seionHEl.checked && !seionKEl.checked &&
+        !bionHEl.checked && !bionKEl.checked &&
+        !dakuonHEl.checked && !dakuonKEl.checked &&
+        !handakuonHEl.checked && !handakuonKEl.checked &&
+        !youonHEl.checked && !youonKEl.checked
     ) {
-        let randomNum = Math.floor(Math.random() * fullList.length);
-        result = fullList[randomNum].name;
+        pool = fullList.map(f => f.name);
     } else {
-        let checkListed = [];
-
         fullList.forEach(item => {
             if (
                 (seionHEl.checked && item.team.includes("seionH")) ||
@@ -239,20 +232,62 @@ btnEl.addEventListener("click", function () {
                 (handakuonKEl.checked && item.team.includes("handakuonK")) ||
                 (youonHEl.checked && item.team.includes("youonH")) ||
                 (youonKEl.checked && item.team.includes("youonK"))
-            ) {
-                checkListed.push(item.name);
-            }
+            ) pool.push(item.name);
         });
-
-        let randomNum = Math.floor(Math.random() * checkListed.length);
-        result = checkListed[randomNum];
     }
 
+    const result = pool[Math.floor(Math.random() * pool.length)];
     popupTextEl.innerText = result;
     popupEl.classList.add("show");
+
+    if (!historyList.includes(result)) historyList.push(result);
 });
 
-// 點擊字本身關閉
-popupTextEl.addEventListener("click", function () {
-    popupEl.classList.remove("show");
-});
+// 點擊關閉 popup
+popupTextEl.addEventListener("click", () => popupEl.classList.remove("show"));
+
+// 雙擊 instruction 顯示 / 隱藏歷史
+instructionEl.addEventListener("dblclick", () => showHistoryPopup());
+
+// 雙擊歷史視窗自己關閉
+historyPopupEl.addEventListener("dblclick", () => historyPopupEl.classList.remove("show"));
+
+// 顯示歷史彈跳視窗
+function showHistoryPopup() {
+    const groups = [
+        { title: "清音(平假名)", key: "seion", hira: true },
+        { title: "清音(片假名)", key: "seion", hira: false },
+        { title: "鼻音(平假名)", key: "bion", hira: true },
+        { title: "鼻音(片假名)", key: "bion", hira: false },
+        { title: "濁音(平假名)", key: "dakuon", hira: true },
+        { title: "濁音(片假名)", key: "dakuon", hira: false },
+        { title: "半濁音(平假名)", key: "handakuon", hira: true },
+        { title: "半濁音(片假名)", key: "handakuon", hira: false },
+        { title: "拗音(平假名)", key: "youon", hira: true },
+        { title: "拗音(片假名)", key: "youon", hira: false }
+    ];
+
+    historyPopupEl.innerHTML = "";
+
+    groups.forEach(g => {
+        const filtered = historyList.filter(ch => {
+            const item = fullList.find(f => f.name === ch);
+            return item && item.team.some(t =>
+                t.includes(g.key) && ((g.hira && isHiragana(ch)) || (!g.hira && isKatakana(ch)))
+            );
+        });
+        if (filtered.length > 0) {
+            const div = document.createElement("div");
+            div.className = "group";
+            div.innerHTML = `<strong>${g.title}：</strong>${filtered.join("、")}`;
+            historyPopupEl.appendChild(div);
+        }
+    });
+
+    // 放到 popup-area 下方
+    const popupAreaRect = document.querySelector(".popup-area").getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    historyPopupEl.style.top = `${popupAreaRect.bottom + scrollTop + 10}px`;
+
+    historyPopupEl.classList.add("show");
+}

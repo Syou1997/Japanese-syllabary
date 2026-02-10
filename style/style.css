@@ -37,9 +37,10 @@ body .filter h4 {
   color: white;
   font-size: 3rem;
   font-family: "myFont1", sans-serif;
+  cursor: pointer;
 }
 body .filter main {
-  /* === 彈跳視窗區 === */
+  position: relative;
 }
 body .filter main .popup-area {
   min-height: 8rem;
@@ -56,7 +57,7 @@ body .filter main .popup-area .popup {
   animation: pop 0.3s ease;
 }
 body .filter main .popup-area .popup h2 {
-  font-size: 5rem;
+  font-size: 6rem;
   cursor: pointer;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -92,6 +93,10 @@ body .filter main .box-area .group label {
   font-weight: bold;
   font-family: monospace;
 }
+body .filter main .box-area .group input[type=checkbox] {
+  transform: scale(1.5);
+  margin-left: 0.5rem;
+}
 body .filter main .btn-area {
   margin-top: 1rem;
   display: flex;
@@ -120,9 +125,39 @@ body .filter main .btn-area .btn .p2 {
   color: red;
 }
 
+/* 歷史彈跳視窗 */
+.history-popup {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-height: 300px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  overflow-y: auto;
+  font-size: 2.5rem;
+  line-height: 2.8rem;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+.history-popup .group {
+  margin-bottom: 1rem;
+  word-break: break-all;
+}
+.history-popup.show {
+  display: block;
+}
+
 /* RWD */
 @media (max-width: 768px) {
   .popup-area .popup h2 {
     font-size: 3.5rem;
+  }
+  .history-popup {
+    font-size: 1.8rem;
+    line-height: 2rem;
   }
 }/*# sourceMappingURL=style.css.map */
