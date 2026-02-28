@@ -245,7 +245,7 @@ btnEl.addEventListener("click", () => {
     popupEl.classList.add("show");
 });
 
-// 點擊 popup 文字 → 才儲存
+// 點擊 popup 文字來儲存
 popupTextEl.addEventListener("click", () => {
     popupEl.classList.remove("show");
 
