@@ -202,12 +202,14 @@ const popupTextEl = document.getElementById("popupText");
 const instructionEl = document.getElementById("instruction");
 
 const historyPopupEl = document.getElementById("history-popup");
+
 let historyList = [];
+let currentChar = null; // ⭐ 新增：只記錄目前顯示的字
 
 const isHiragana = ch => /[\u3040-\u309F]/.test(ch);
 const isKatakana = ch => /[\u30A0-\u30FF]/.test(ch);
 
-// 產生假名
+// 產生假名（不再自動存）
 btnEl.addEventListener("click", () => {
     let pool = [];
 
@@ -237,14 +239,22 @@ btnEl.addEventListener("click", () => {
     }
 
     const result = pool[Math.floor(Math.random() * pool.length)];
+    currentChar = result; // ⭐ 記住目前這一個字
+
     popupTextEl.innerText = result;
     popupEl.classList.add("show");
-
-    if (!historyList.includes(result)) historyList.push(result);
 });
 
-// 點擊關閉 popup
-popupTextEl.addEventListener("click", () => popupEl.classList.remove("show"));
+// 點擊 popup 文字 → 才儲存
+popupTextEl.addEventListener("click", () => {
+    popupEl.classList.remove("show");
+
+    if (currentChar && !historyList.includes(currentChar)) {
+        historyList.push(currentChar);
+    }
+
+    currentChar = null;
+});
 
 // 雙擊 instruction 顯示 / 隱藏歷史
 instructionEl.addEventListener("dblclick", () => showHistoryPopup());
@@ -269,18 +279,19 @@ function showHistoryPopup() {
 
     historyPopupEl.innerHTML = "";
 
-    const usedChars = new Set(); // 全局去重
+    const usedChars = new Set();
 
     groups.forEach(g => {
         const filtered = historyList.filter(ch => {
             const item = fullList.find(f => f.name === ch);
             return item && item.team.some(t =>
-                t.includes(g.key) && ((g.hira && isHiragana(ch)) || (!g.hira && isKatakana(ch)))
+                t.includes(g.key) &&
+                ((g.hira && isHiragana(ch)) || (!g.hira && isKatakana(ch)))
             );
-        }).filter(ch => !usedChars.has(ch)); // 避免重複
+        }).filter(ch => !usedChars.has(ch));
 
         if (filtered.length > 0) {
-            filtered.forEach(ch => usedChars.add(ch)); // 標記已使用
+            filtered.forEach(ch => usedChars.add(ch));
             const div = document.createElement("div");
             div.className = "group";
             div.innerHTML = `<strong>${g.title}：</strong>${filtered.join("、")}`;
@@ -288,11 +299,9 @@ function showHistoryPopup() {
         }
     });
 
-    // 放到 popup-area 下方
     const popupAreaRect = document.querySelector(".popup-area").getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     historyPopupEl.style.top = `${popupAreaRect.bottom + scrollTop + 10}px`;
 
     historyPopupEl.classList.add("show");
 }
-
