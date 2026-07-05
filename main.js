@@ -304,4 +304,13 @@ function showHistoryPopup() {
     historyPopupEl.style.top = `${popupAreaRect.bottom + scrollTop + 10}px`;
 
     historyPopupEl.classList.add("show");
-}
+};
+
+// 新增：按下 Enter 鍵時觸發按鈕點擊
+window.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        // 避免觸發表單預設行為
+        event.preventDefault(); 
+        btnEl.click();
+    }
+});
